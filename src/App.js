@@ -1,8 +1,13 @@
 import logo from './logo.svg';
 import './App.css';
 import CustomOTPInput from './lib/components/CustomOTPInput';
+import { useState } from 'react';
+// import CustomOTPInput from 'react-otp-inpt/dist/components/CustomOTPInput';
 
 function App() {
+
+  const [otp, setOtp] = useState(1235)
+
   return (
     <div className="App">
       <header className="App-header">
@@ -18,7 +23,7 @@ function App() {
         >
           Learn React
         </a>
-        <CustomOTPInput />
+        <CustomOTPInput value={otp} onChange={(value) => setOtp(value)}/>
       </header>
     </div>
   );
