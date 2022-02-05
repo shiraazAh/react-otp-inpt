@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useRef} from "react";
 import { useEffect } from "react/cjs/react.development";
 
 const CustomOTPInput = ({onChange, placeholder, className, outerInputClassName, otpInputsClassName, otpWrapperClassName, value}) => {
@@ -27,7 +27,7 @@ const CustomOTPInput = ({onChange, placeholder, className, outerInputClassName, 
     useEffect(() => {
         if(value) {
             let setValue = value.toString()
-            setCurInput(setValue.length)
+            setValue.length > 3 ? setCurInput(setValue.length - 1) : setCurInput(setValue.length)
             setValue = setValue.slice(0, 4).split("");
             setOTP([...setValue])
         }
@@ -169,6 +169,10 @@ const CustomOTPInput = ({onChange, placeholder, className, outerInputClassName, 
                     height: 18px !important;
                     margin-left: 0.3rem;
                     width: 20px;
+                }
+
+                .otpInput:focus {
+                    border-bottom: 1px solid #1680AA !important;
                 }
 
                 .otpInput:first-child {
