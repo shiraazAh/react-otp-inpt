@@ -2,6 +2,8 @@
 
 A simple OTP input. 
 
+![ezgif com-gif-maker](https://user-images.githubusercontent.com/35837216/152675766-783313dd-7061-45cc-820a-34255a6dcd18.gif)
+
 ## Example
 
 ```								
