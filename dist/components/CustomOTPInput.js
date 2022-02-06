@@ -7,13 +7,13 @@ exports.default = void 0;
 
 require("core-js/modules/web.dom-collections.iterator.js");
 
-require("core-js/modules/es.parse-int.js");
-
 require("core-js/modules/es.regexp.to-string.js");
 
 require("core-js/modules/es.regexp.exec.js");
 
 require("core-js/modules/es.string.split.js");
+
+require("core-js/modules/es.parse-int.js");
 
 var _react = _interopRequireWildcard(require("react"));
 
@@ -35,7 +35,8 @@ const CustomOTPInput = _ref => {
   } = _ref;
   const [OTP, setOTP] = (0, _react.useState)(["", "", "", ""]);
   const [isFocused, setIsFocused] = (0, _react.useState)(false);
-  const [curInput, setCurInput] = (0, _react.useState)(0);
+  const [curInput, setCurInput] = (0, _react.useState)(0); // 0, 1, 2, 3
+
   const [isBackSpace, setIsBackSpace] = (0, _react.useState)(false);
   const otpRef1 = (0, _react.useRef)("");
   const otpRef2 = (0, _react.useRef)("");
@@ -49,18 +50,25 @@ const CustomOTPInput = _ref => {
   (0, _react2.useEffect)(() => {
     // if(OTP[0] !== "" && OTP[1] !== "" && OTP[2] !== "" && OTP[3] !== "") {
     let otpValue = OTP.join("");
-    if (onChange) onChange(parseInt(otpValue)); // }
+    if (onChange) onChange(otpValue); // }
   }, [OTP]);
   (0, _react2.useEffect)(() => {
+    let newArrayVal = ["", "", "", ""];
+
     if (value) {
-      let setValue = value.toString();
-      setCurInput(setValue.length);
-      setValue = setValue.slice(0, 4).split("");
-      setOTP([...setValue]);
+      let recievedValue = value.toString();
+      if (recievedValue.length > 3) setCurInput(recievedValue.length - 1);else setCurInput(recievedValue.length);
+      recievedValue = recievedValue.slice(0, 4).split("");
+      recievedValue.map((val, i) => {
+        newArrayVal[i] = val;
+      });
+      setOTP([...newArrayVal]);
+    } else {
+      setCurInput(0);
     }
   }, [value]);
   (0, _react2.useEffect)(() => {
-    if (!placeholder) setIsFocused(true);
+    if (!placeholder || value) setIsFocused(true);
   }, []);
 
   const onChangeHandler = (index, value) => {
@@ -79,9 +87,11 @@ const CustomOTPInput = _ref => {
       if (digits > 1) {
         let numberValueString = numberValue.toString().slice(0, 4); // get only 4 values max
 
+        let ch = 0;
         newOTParray.map((el, i) => {
           if (index <= i && digits > i) {
-            newOTParray[i] = parseInt(numberValueString.slice(i, i + 1));
+            newOTParray[i] = parseInt(numberValueString.slice(ch, ch + 1));
+            ch = ch + 1;
           }
         });
         newCurInput = index + digits - 1;
@@ -104,16 +114,27 @@ const CustomOTPInput = _ref => {
   };
 
   const backspaceHandler = e => {
-    if (e.keyCode === 8 && !e.target.value) {
+    if (e.keyCode === 8 && !e.target.value && OTP[0]) {
       setIsBackSpace(true);
     }
   };
 
   (0, _react2.useEffect)(() => {
     if (isBackSpace) {
-      if (curInput === 0) otpRef1.current.focus();else if (curInput === 1) otpRef1.current.focus();else if (curInput === 2) otpRef2.current.focus();else if (curInput === 3) {
+      let newOtp = [...OTP];
+      curInput !== 0 ? newOtp[curInput - 1] = "" : newOtp[curInput] = "";
+
+      if (curInput === 0) {
+        otpRef1.current.focus();
+      } else if (curInput === 1) {
+        otpRef1.current.focus();
+      } else if (curInput === 2) {
+        otpRef2.current.focus();
+      } else if (curInput === 3) {
         otpRef3.current.focus();
       }
+
+      setOTP(newOtp);
     }
   }, [isBackSpace]);
 
@@ -179,7 +200,7 @@ const CustomOTPInput = _ref => {
     name: "Otp4"
   })), /*#__PURE__*/_react.default.createElement("style", {
     jsx: true
-  }, "\n                .otpInput {\n                    width: 32px;\n                    border: none;\n                    border-bottom: 1px solid #cccccc !important;\n                    border-radius: 0px !important;\n                    height: 18px !important;\n                    margin-left: 0.3rem;\n                    width: 20px;\n                }\n\n                .otpInput:first-child {\n                    margin-left: 0rem !important;\n                }\n                .otpInputWrapper {\n                    position: absolute;\n                    top: 0px;\n                    left: 10px;\n                    width: 100%;\n                }\n                .otp-wrapper{\n                    position: relative;\n                    display: inline-block;\n                }\n                .otp-wrapper-input {\n                    width: 175px;\n                }\n                input.form-control {\n                    background: #FFFFFF;\n                    border-radius: 5px;\n                    padding: 10px;\n                    height: 26px;\n                    font-size: 16px;\n                    font-family: inherit;\n                }\n                \n                input.form-control:focus{\n                    outline: none;\n                }\n            "));
+  }, "\n                .otpInput {\n                    width: 32px;\n                    border: none !important;\n                    border-bottom: 1px solid #9D9D9D !important;\n                    border-radius: 0px !important;\n                    height: 18px !important;\n                    margin-left: 0.3rem;\n                    width: 20px;\n                }\n\n                .otpInput:focus {\n                    border-bottom: 1px solid #1680AA !important;\n                    border: none !important;\n                }\n                .otpInput:focus-visible {\n                    // border: none !important;\n                    border-bottom: 1px solid #1680AA !important;\n                    outline: none;\n                }\n\n                .otpInput:first-child {\n                    margin-left: 0rem !important;\n                }\n                .otpInputWrapper {\n                    position: absolute;\n                    top: 2px;\n                    left: 10px;\n                    width: 100%;\n                }\n                .otp-wrapper{\n                    position: relative;\n                    display: inline-block;\n                }\n                .otp-wrapper-input {\n                    width: 175px;\n                }\n                .otp-wrapper-input:focus {\n                    border: none !important;\n                }\n                input.form-control {\n                    background: #FFFFFF;\n                    border-radius: 5px;\n                    padding: 10px;\n                    height: 26px;\n                    font-size: 16px;\n                    font-family: inherit;\n                    border: 1px solid #9D9D9D;\n                  }\n                }\n                \n                input.form-control:focus{\n                    outline: none;\n                }\n            "));
 };
 
 var _default = CustomOTPInput;
