@@ -28,7 +28,7 @@ const App = () => {
 | Prop                                  | Type              | Default                                                                                  | Description                                                                                                                                                                                                               |
 | ------------------------------------- | ----------------- | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | onChange                               | function           | **Required**                                                                              | Returns OTP code typed in inputs                                                                                                                                                       |
-| value | String || number             | **Required**                                                                           | This is will be the value displayed on the input |
+| value | String |     **Required**                                                                           | This is will be the value displayed on the input |
  placeholder | String              | -                                                                           | Give placeholder to give show a placeholder text initially (this will go on focus of the input), if placeholder is given no value, then it will directly show the otp inputs |
 
 ## Styling Props
