@@ -48,7 +48,7 @@ const CustomOTPInput = ({onChange, placeholder, className, outerInputClassName, 
         if(!!onChange) {
             let numberValue = parseInt(value)
             let digits = value ? numberValue.toString().length : ""
-            if (value != "" && !numberValue) { //If its not a number do nothing
+            if (value != "" && (numberValue !==0 && !numberValue)) { //If its not a number do nothing
                 return;
             }
             let newOTParray = [...OTP];
